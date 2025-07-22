@@ -1,0 +1,271 @@
+1. Price & Return Transforms
+
+Simple/Log returns: 1-bar, multi-bar (e.g., 5, 20), overlapping or non-overlapping.
+
+Cumulative returns over rolling windows.
+
+Open-to-close / close-to-open / intraday vs overnight returns.
+
+OHLC ratios & gaps: High−Low range, (Close−Open)/Open, gap to prior close, unfilled gap size, time to fill gap.
+
+Distance to extremes: (Close − rolling_max(High,N)) / rolling_max(High,N); same for lows.
+
+Rolling autocorrelation of returns at various lags.
+
+Realized skew/kurtosis of intraday returns (if high-frequency data available).
+
+Cumulative log price (for regression line slope/curvature features).
+
+2. Trend / Level (Overlap Studies)
+
+Moving averages: SMA, EMA/EWMA, WMA, DEMA/TEMA, Hull MA, KAMA (Kaufman Adaptive), Jurik MA.
+
+Crossover signals: fast vs slow MA; price vs MA; multiple MA ribbons.
+
+MA slope & curvature: slope of MA or rolling linear regression on price; 2nd derivative (acceleration).
+
+Filtered trends: Kalman filter state estimate, Hodrick–Prescott trend, STL trend component.
+
+Price channels/bands: Donchian (N-day high/low), Keltner (EMA ± ATR multiplier), Bollinger %B, band width.
+
+Choppiness index / trend-strength metrics (e.g., ADX).
+
+Time above/below a moving average.
+
+3. Momentum & Oscillators
+
+ROC (Rate of Change): (Price[t] / Price[t-n]) − 1.
+
+RSI (classic & variants), Stochastic %K/%D, Williams %R.
+
+MACD (EMA12 − EMA26), signal line, histogram.
+
+TRIX (triple-smoothed ROC), CCI (Commodity Channel Index), Ultimate Oscillator.
+
+Momentum percentile ranks: position of current return relative to past N returns.
+
+Time-since-new-high/low, or “number of new highs in last N bars”.
+
+Forward-looking momentum (for labeling): future k-bar return to create a supervised target.
+
+4. Volatility & Range Features
+
+Rolling realized vol/var: std/var of returns over N bars.
+
+EWMA volatility (RiskMetrics-style).
+
+Range-based estimators: Parkinson, Garman–Klass, Rogers–Satchell, Yang–Zhang.
+
+ATR (Average True Range) and ATR normalized by price or moving average.
+
+Bollinger band width / %B (also under Trend).
+
+Volatility of volatility: std of rolling vol series.
+
+Jump indicators: |return| > k * rolling_std.
+
+Drawdown & underwater stats: max drawdown in last N, duration of drawdown.
+
+5. Volume, Liquidity & Flow
+
+Raw & normalized volume: z-score, percentile, volume spikes.
+
+OBV (On-Balance Volume), Accumulation/Distribution line, Chaikin Money Flow.
+
+Volume-price trend (VPT), Volume-weighted ROC.
+
+VWAP distance: (Close − VWAP)/VWAP; rolling VWAP slope.
+
+Volume per trade / trade count (intraday); average trade size.
+
+Liquidity proxies: Amihud illiquidity (|ret|/volume), Roll spread estimator.
+
+Order flow imbalance: (aggressive buy vol − aggressive sell vol)/(total).
+
+Bid-ask spread / effective spread if LOB data available.
+
+VPIN (Volume-Synchronized Probability of Informed Trading).
+
+6. Range/Breakout/Mean-Reversion Metrics
+
+Breakout flags: price crosses N-day high/low; close above Donchian channel.
+
+Distance from channel/band midline.
+
+Z-score of price vs rolling mean (Bollinger %B-like).
+
+Keltner/ATR channel touch counts.
+
+Mean reversion strength: coefficient from AR(1) on returns, or half-life of mean reversion.
+
+Price deviation from regression line (residual) & its z-score.
+
+7. Cross-Asset / Relative Strength & Breadth
+
+Relative return / ratio: target asset divided by benchmark or sector ETF.
+
+Rolling correlation/beta with benchmark, sector, or other assets.
+
+Pairs spread: price − β·reference_price; z-score of spread; cointegration residual.
+
+Cross-sectional ranks: rank asset’s momentum/vol/valuation among its universe at time t.
+
+Breadth indicators: % of assets above MA, making new highs, positive returns, etc.
+
+Market internals: advance/decline line, TRIN (Arms Index), put/call ratio (if available).
+
+8. Options/Derivatives & Implied Metrics (if data available)
+
+Implied volatility (IV) levels & term structure slopes.
+
+IV skew/smile metrics: difference between 25-delta put IV and call IV.
+
+Realized vs implied vol spread.
+
+Volatility risk premium: IV − realized vol.
+
+Put/call open interest & volume ratios.
+
+Gamma exposure (GEX), vanna/charm proxies (popular in options flow analysis).
+
+9. Seasonality / Calendar / Time-of-Day
+
+Day-of-week/month dummies, quarter-end, year-end effects.
+
+Turn-of-month, holiday, earnings day, FOMC day flags.
+
+Intraday seasonality: hour/minute bucket averages; open/close auction effects.
+
+Fourier terms: sin/cos for weekly/monthly cycles.
+
+Lunar cycle, macro release timestamps (CPI, NFP), rollover dates for futures.
+
+10. Event / Pattern-Based Features
+
+Candlestick patterns: engulfing, hammer, doji, shooting star. (Binary flags or counts.)
+
+Gap events: magnitude, direction, filled/not, time to fill.
+
+Breakaway/runaway exhaustion gaps.
+
+Spike detection: volume spikes, price jumps, volatility bursts; features like time since last spike.
+
+News/sentiment events: sentiment score changes, keyword hits (earnings, downgrade, lawsuit).
+
+Corporate events: dividend ex-dates, earnings announcements, guidance, splits.
+
+11. Statistical / Information-Theoretic / Fractality
+
+Hurst exponent / DFA (detrended fluctuation analysis).
+
+Fractal dimension estimates (Katz, Higuchi).
+
+Approximate entropy / sample entropy of return series.
+
+Permutation entropy, Shannon entropy on return bins.
+
+Mutual information between feature and target (for feature selection).
+
+PCA/ICA loadings on a set of returns/features; variance explained.
+
+Kurtosis/skewness of rolling returns (already mentioned but group here too).
+
+12. Regime / State / ML-Derived Features
+
+Hidden Markov Model (HMM) state probabilities (bull/bear/sideways, high/low vol states).
+
+Clustering labels (K-means/DBSCAN on recent feature window).
+
+Change-point detection: binary flag for structural breaks (ruptures, BOCPD).
+
+Regime duration counters: bars spent in current state.
+
+Autoencoder embeddings of raw features.
+
+Topic/sentiment embeddings (from news or social), mapped to price series times.
+
+13. Microstructure & Order Book (HFT / Intraday)
+
+Trade sign imbalance (Lee–Ready or bulk classification).
+
+Order book depth imbalance: (Σ bid sizes − Σ ask sizes)/(Σ sizes).
+
+LOB slope / convexity from price levels vs quantity.
+
+Quote-to-trade ratio, order cancellation rates.
+
+Duration between trades / inter-arrival times, their volatility.
+
+Queue position changes, order age distributions.
+
+Microprice: weighted mid based on depth; distance of last trade to microprice.
+
+Effective/timing costs: slippage measures.
+
+14. Path-Dependent & Shape Features
+
+Maximum excursion up/down within window (MFE/MFE for trades; can be features too).
+
+Number of sign changes in returns over window.
+
+Time spent above/below zero return or above a threshold in a window.
+
+Cumulative absolute return (CAR) or realized variance within window.
+
+Drawdown path stats: average drawdown size, depth/duration distributions.
+
+Swing high/low counts: number of local extrema.
+
+15. Alternative / Exogenous Data Features (if accessible)
+
+Macro indicators (CPI surprise, PMI, rates, term spreads) aligned to event time.
+
+Positioning data: CFTC CoT, ETF flows, fund flows.
+
+Sentiment indices: AAII, Fear & Greed, social sentiment scores.
+
+Search trends (Google Trends), Twitter/Reddit buzz indices.
+
+Web-scraped fundamentals: earnings revisions, analyst rating changes.
+
+16. Risk & Performance Metrics (Rolling)
+
+Rolling Sharpe / Sortino / Calmar ratios (use forward or backward returns).
+
+Omega ratio, gain-loss ratio, upside/downside capture vs benchmark.
+
+Tail risk measures: rolling VaR, CVaR (expected shortfall), POT/GPD tail parameters.
+
+Max drawdown & recovery time metrics.
+
+17. Feature Interaction & Meta-Features
+
+Feature importance / SHAP values used as meta-features.
+
+Stability metrics: correlation of feature with target over rolling windows.
+
+Regime-conditional versions: feature * state_prob.
+
+Composite indicators: weighted combos (e.g., average of normalized momentum signals).
+
+18. Label Engineering (Not features, but critical)
+
+Future k-bar return (classification: up/down big > threshold; regression: actual return).
+
+Triple-barrier method labels (hit upper, lower, or time-out barrier).
+
+Event-based sampling (bars defined by % move, not time; then compute features).
+
+19. Implementation Considerations
+
+No look-ahead: align windows to exclude current bar when predicting next.
+
+Resampling / alignment: make sure all series share timestamps; forward-fill only permissible fields.
+
+Hyperparameters: treat window lengths, decay factors as tunable.
+
+Normalization per asset and per regime when working cross-sectionally.
+
+Feature selection: MI, permutation importance, SHAP, L1, Boruta, etc.
+
+Cross-validation: Purged & embargoed CV for time series, walk-forward CV.
